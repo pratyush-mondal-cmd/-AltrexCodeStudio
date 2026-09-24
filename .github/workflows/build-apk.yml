@@ -21,12 +21,14 @@ jobs:
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
-
       - name: Extract project ZIP
         run: |
           mkdir buildsrc
           unzip -q AltrexStyleCodeStudio-phone-build-v0.1.0.zip -d buildsrc
-      
+
+      - name: Fix Java Kotlin target
+        run: |
+          find buildsrc -name "build.gradle" -type f -exec sed -i 's/JavaVersion.VERSION_1_8/JavaVersion.VERSION_17/g' {} +
       - name: Build APK
         working-directory: buildsrc/AltrexStyleCodeStudio
         run: gradle :app:assembleDebug --no-daemon
