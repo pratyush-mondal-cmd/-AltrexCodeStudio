@@ -26,12 +26,7 @@ jobs:
         run: |
           mkdir buildsrc
           unzip -q AltrexStyleCodeStudio-phone-build-v0.1.0.zip -d buildsrc
-      - name: Fix Java Kotlin target
-        working-directory: buildsrc/AltrexStyleCodeStudio
-        run: |
-          sed -i '/android {/a\    compileOptions { sourceCompatibility JavaVersion.VERSION_17 targetCompatibility JavaVersion.VERSION_17 }' app/build.gradle
-          sed -i '/android {/a\    kotlinOptions { jvmTarget = "17" }' app/build.gradle
-     
+      
       - name: Build APK
         working-directory: buildsrc/AltrexStyleCodeStudio
         run: gradle :app:assembleDebug --no-daemon
